@@ -1,0 +1,22 @@
+{
+  "name": "memory",
+  "version": "1.0.0",
+  "description": "Gray Area Final",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jyng/memory.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jyng/memory/issues"
+  },
+  "homepage": "https://github.com/jyng/memory#readme",
+  "dependencies": {
+    "howler": "^2.0.12"
+  }
+}
