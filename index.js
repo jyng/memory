@@ -9,59 +9,71 @@ $( function() {
 
   var loadCount = 0
   var allLoaded = false
+  var sampleBuffers = []
+
+  //Audio array
 
   const pathsToLoad = [
-    '/sound/higgs.mp3'
+    '/sound/getting-off-bus.mp3',
+    '/sound/higgs.mp3',
+    
   ]
+  // Promise for audio loading
 
-  pathsToLoad.map(path => loadSample(path, audioLoadedCallback(pathsToLoad.length, loadCount)))
+  const promises = pathsToLoad.map(path => makeRequest('GET', path).then(r =>  context.decodeAudioData(r)))
 
-  loadSample('/sound/higgs.mp3', function(sample) {
-    sampleBuffer = sample;
-  });
+  Promise.all(promises).then(rs => { sampleBuffers = rs })
 
-  $('#play-sample').on('click', function(e) {
-    // don't play the sample unless it has loaded!
-    if(sampleBuffer) {
-      // create an AudioBufferSource, which can hold and play a sample.
+
+
+  // Jquery UI to play Audio
+  $('#play-sample-1').on('click', () => play(0))
+  $('#play-sample-2').on('click', () => play(1))
+
+  // Play audio function
+  const play = bufferIndex => {
+    console.log(sampleBuffers)
+    if (sampleBuffers[bufferIndex]) {
       var source = context.createBufferSource();
       // set its buffer to our sampleBuffer
-      source.buffer = sampleBuffer;
+      source.buffer = sampleBuffers[bufferIndex];
+      console.log(source)
+
       // now we can treat it like any audio node
       source.connect(context.destination);
       source.start(0);
     }
-  });
+  }
+
+
 
 });
 
-function audioLoadedCallback(numberOfPaths, loadCount) {
-  loadCount++
-  if (numberOfPaths === loadCount) {
-    allLoaded = true
-  }
+// Abstraction of Audio input
+function makeRequest (method, url) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.responseType = 'arraybuffer';
+
+    xhr.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText
+        });
+      }
+    };
+    xhr.onerror = function () {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText
+      });
+    };
+    xhr.send();
+  });
 }
 
-// Here's an abstraction of the sample loading process. Since this
-// involves an asynchronous request, we give it a callback to signal
-// its completion. The callback gets the decoded sample buffer.
 
-function loadSample(path, callback) {
-  // create a new http request
-  var request = new XMLHttpRequest();
-  // it's a GET request for the url `synth.mp3`, which in a more
-  // typical setup might be `/sounds/synth.mp3` or some other static
-  // file route.
-  request.open('GET', path, true);
-  // we want the browser to interpret the data as an arraybuffer,
-  // which is the format the web audio API expects samples in.
-  request.responseType = 'arraybuffer';
-  // tell the request what to do when it's done
-  request.onload = function() {
-    // this function turns our arraybuffer into an AudioBuffer
-    // that the web audio api can understand.
-    context.decodeAudioData(request.response, callback);
-  };
-  // send the request
-  request.send();
-}
