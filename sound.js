@@ -14,8 +14,8 @@ window.onload = function(e) {
 
     // playing i+1 audio (= chaining audio files)
     var onEnd = function(e) {
-      if (loop === true ) { pCount = (pCount + 1 !== howlerBank.length)? pCount + 1 : 0; }
-      else { pCount = pCount + 1; }
+      // if (loop === true ) { pCount = (pCount + 1 !== howlerBank.length)? pCount + 1 : 0; }
+      pCount = pCount + 1;
       howlerBank[pCount].play();
     };
 
