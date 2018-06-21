@@ -5,34 +5,15 @@ window.onload = function(e) {
     var onPlay = [false],  // this one is useless now
       pCount = 0;
       playlistUrls = [
-        "/sound/4dd.ogg",
         "/sound/2p.mp3",
-        "/sound/3m.mp3"
+        "/sound/3m.mp3",
+        "/sound/4dd.ogg",
         ], // audio list
       howlerBank = []
       loop = false
       wholeTrack = false
       currentTime = false
-
       crossFadeStartPoints = [];
-
-      // playing i+1 audio (= chaining audio files)
-      var onEnd = function(e) {
-        // if (loop === true ) { pCount = (pCount + 1 !== howlerBank.length)? pCount + 1 : 0; }
-        pCount = pCount + 1;
-        howlerBank[pCount].play();
-      };
-      // crossFadeStartPoints = wholeTrack * 0.9
-      setTimeout(() => {
-        wholeTrack = howlerBank.map(howlerObject => {
-          return howlerObject.duration()
-        })
-        currentTime = howlerBank[pCount].seek();
-      }, 1000)
-
-
-
-
 
 
 // DEFINITIONS
@@ -44,34 +25,62 @@ window.onload = function(e) {
         buffer: true,
         }))
     });
+    setTimeout(() => {
+      wholeTrack = howlerBank.map(howlerObject => {
+        return howlerObject.duration()
+      })
+      currentTime = howlerBank[pCount].seek();
+    }, 1000)
 
     //Current percent
     // console.log("crossFadeStartPoints =",crossFadeStartPoints);
     // Equal-power crossfading curve:
-    function equalPowerCrossfade(trackPercent) {
-    var gain1 = Math.cos(percent * 0.5*Math.PI);
-    var gain2 = Math.cos((1.0 - percent) * 0.5*Math.PI);
-    this.ctl1.gainNode.gain.value = gain1;
-    this.ctl2.gainNode.gain.value = gain2;
 
+    function dec(percent) {
+      var minus = 0.4-(Math.cos(percent * 0.5*Math.PI));
+      howlerBank[pCount].volume(minus);
+    }
+
+    function inc(percent) {
+      var plus = Math.cos(percent * 0.5*Math.PI);
+      howlerBank[pCount].volume(plus);
     }
 
 
 
 
+//EXPRESSIONS
     // initiate the whole :
-        howlerBank[0].play();
+        howlerBank[pCount].play();
+          // playing i+1 audio (= chaining audio files)
+          var onEnd = function(e) {
+            // if (loop === true ) { pCount = (pCount + 1 !== howlerBank.length)? pCount + 1 : 0; }
+            pCount = pCount + 1;
+            howlerBank[pCount].play();
+          };
+
+        console.log(howlerBank[pCount])
 
         setInterval(() => {
           const current = howlerBank[pCount].seek();
-          trackPercent = (wholeTrack[pCount] - currentTime)/(wholeTrack[pCount] * 0.9);
-
-          if ( current > crossFadeStartPoints[pCount]) {
-            crossFadeStartPoints[pCount]
-            equalPowerCrossfade(trackPercent);
-          }
+          trackPercent = (wholeTrack[pCount] - current)/wholeTrack[pCount] ;
+          console.log()
           console.log(trackPercent)
-          ;}, 50);
+
+          if ( trackPercent < .4) {
+            // crossFadeStartPoints[pCount]
+            dec(trackPercent);
+            // howlerBank[pCount].play();
+            // howlerBank[pCount].volume(0);
+            // inc(trackPercent)
+          }
+          //if trackPercent is greater than 90% than add a pCount, start it at volume 0, and then increase
+          if (trackPercent ) {
+
+          }
+
+          console.log()
+          ;}, 500);
 
 
 
