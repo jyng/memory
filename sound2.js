@@ -3,8 +3,8 @@ window.onload = function(e) {
 pCount = 0;
 howlerBank = []
 playlistUrls = [
-  ["/sound/3bus.mp3", "/sound/3bus2.mp3", "/sound/3bus3.mp3", "/sound/3m.mp3"],
-  ["/sound/2p.mp3", "/sound/21.mp3", "/sound/55.mp3", "/sound/office.mp3"],
+  ["/sound/bus-begin.wav", "/sound/3bus2.mp3", "/sound/3bus3.mp3", "/sound/3m.mp3"],
+  ["/sound/bus-on.wav", "/sound/21.mp3", "/sound/55.mp3", "/sound/office.mp3"],
   ["/sound/3m.mp3", "/sound/4d.mp3", "/sound/faye.mp3", "/sound/song.mp3"],
   ["/sound/home.mp3", "/sound/faye.mp3", "/sound/office.mp3", "/sound/plow.mp3"],
 ]
@@ -40,7 +40,7 @@ var onEnd = function(e) {
   pCount = pCount + 1;
   howlerBank[pCount].play();
 }
-console.log(howlerBank[pCount])
+// console.log(randomItems)
 
 
 
