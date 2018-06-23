@@ -40,7 +40,7 @@ var onEnd = function(e) {
   pCount = pCount + 1;
   howlerBank[pCount].play();
 }
-// console.log(randomItems)
+console.log(randomItems)
 
 
 
