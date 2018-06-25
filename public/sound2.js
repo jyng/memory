@@ -41,7 +41,4 @@ var onEnd = function(e) {
   howlerBank[pCount].play();
 }
 console.log(randomItems)
-
-
-
 }
