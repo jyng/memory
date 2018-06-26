@@ -85,54 +85,94 @@ window.onload = function(e) {
 
     socket.on('data',function(data) {
         r = data;
+        console.log(r);
+        if (r > 10){
+        setTimeout(() => {
+          updateTrackCrossfade()
+          // currentTime = hb[thisTrackNum].seek();
+          hb[thisTrackNum].play();
+
+          setInterval(() => {
+            // console.log(hb.map(item => item.playing()))
+
+            //
+          if (isInBounds(thisTrackNum, hb)) {
+            currentTime = hb[thisTrackNum].seek();
+            progressAfterStartPointInDec = (currentTime - timeBeforeStartPoint) / timeAfterStartPoint
+
+            console.log('vol B:', hb[thisTrackNum+1].volume(), 'vol A:', hb[thisTrackNum].volume())
+
+            if ( currentTime > timeBeforeStartPoint ) {
+
+              if (!hb[thisTrackNum + 1].playing()) {
+
+                hb[thisTrackNum + 1].volume(0);
+                hb[thisTrackNum + 1].play();
+              }
+
+              crossFade(progressAfterStartPointInDec, thisTrackNum)
+              crossFade(1 - progressAfterStartPointInDec, thisTrackNum + 1);
+
+
+            }
+          }
+
+
+          }, 50);
+
+        }, 1000)
+      }
+
+      else {
+
+      }
     });
-    console.log(r);
 
 
     // const sensor = () => {
     //
     //
     // }
-    if (r > 2){
-    setTimeout(() => {
-      updateTrackCrossfade()
-      // currentTime = hb[thisTrackNum].seek();
-      hb[thisTrackNum].play();
-
-      setInterval(() => {
-        // console.log(hb.map(item => item.playing()))
-
-        //
-      if (isInBounds(thisTrackNum, hb)) {
-        currentTime = hb[thisTrackNum].seek();
-        progressAfterStartPointInDec = (currentTime - timeBeforeStartPoint) / timeAfterStartPoint
-
-        console.log('vol B:', hb[thisTrackNum+1].volume(), 'vol A:', hb[thisTrackNum].volume())
-
-        if ( currentTime > timeBeforeStartPoint ) {
-
-          if (!hb[thisTrackNum + 1].playing()) {
-
-            hb[thisTrackNum + 1].volume(0);
-            hb[thisTrackNum + 1].play();
-          }
-
-          crossFade(progressAfterStartPointInDec, thisTrackNum)
-          crossFade(1 - progressAfterStartPointInDec, thisTrackNum + 1);
-
-
-        }
-      }
-
-
-      }, 50);
-
-    }, 1000)
-  }
-
-  else {
-
-  }
+  //   if (r > 2){
+  //   setTimeout(() => {
+  //     updateTrackCrossfade()
+  //     // currentTime = hb[thisTrackNum].seek();
+  //     hb[thisTrackNum].play();
+  //
+  //     setInterval(() => {
+  //       // console.log(hb.map(item => item.playing()))
+  //
+  //       //
+  //     if (isInBounds(thisTrackNum, hb)) {
+  //       currentTime = hb[thisTrackNum].seek();
+  //       progressAfterStartPointInDec = (currentTime - timeBeforeStartPoint) / timeAfterStartPoint
+  //
+  //       console.log('vol B:', hb[thisTrackNum+1].volume(), 'vol A:', hb[thisTrackNum].volume())
+  //
+  //       if ( currentTime > timeBeforeStartPoint ) {
+  //
+  //         if (!hb[thisTrackNum + 1].playing()) {
+  //
+  //           hb[thisTrackNum + 1].volume(0);
+  //           hb[thisTrackNum + 1].play();
+  //         }
+  //
+  //         crossFade(progressAfterStartPointInDec, thisTrackNum)
+  //         crossFade(1 - progressAfterStartPointInDec, thisTrackNum + 1);
+  //
+  //
+  //       }
+  //     }
+  //
+  //
+  //     }, 50);
+  //
+  //   }, 1000)
+  // }
+  //
+  // else {
+  //
+  // }
 
 
 

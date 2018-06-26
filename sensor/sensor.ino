@@ -40,7 +40,7 @@ void loop() {
   distance = (duration / 2) * 0.0344;
   
   // Send results to Serial Monitor
-  Serial.print("Distance = ");
+//  Serial.print("Distance = ");
   if (distance >= 400) {
     Serial.println("Too far");
   }
@@ -48,9 +48,9 @@ void loop() {
 //    Serial.println("Too close");
 //    }
   else {
-    Serial.print(distance);
-    Serial.println(" cm");
-    delay(500);
+    Serial.println(distance);
+//    Serial.println(" cm");
+//    delay(500);
   }
   delay(500);
 }

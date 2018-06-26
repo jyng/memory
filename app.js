@@ -41,6 +41,7 @@ app.use(express.static("public"));
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
+    app.use('/scripts', express.static(__dirname + '/node_modules/howler/dist/'));
 });
 
 const parser = port.pipe(new Readline({ delimiter: "\r\n" }));
