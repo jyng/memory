@@ -79,53 +79,55 @@ window.onload = function(e) {
         buffer: true,
         })
     });
-      console.log(hb);
+    // Check if function is running
+
+
     // Wait for tracks to load
     var socket = io.connect(window.location.origin);
 
     socket.on('data',function(data) {
-        r = data;
-        console.log(r);
-        if (r > 10){
-        setTimeout(() => {
-          updateTrackCrossfade()
-          // currentTime = hb[thisTrackNum].seek();
-          hb[thisTrackNum].play();
-
-          setInterval(() => {
-            // console.log(hb.map(item => item.playing()))
-
-            //
-          if (isInBounds(thisTrackNum, hb)) {
-            currentTime = hb[thisTrackNum].seek();
-            progressAfterStartPointInDec = (currentTime - timeBeforeStartPoint) / timeAfterStartPoint
-
-            console.log('vol B:', hb[thisTrackNum+1].volume(), 'vol A:', hb[thisTrackNum].volume())
-
-            if ( currentTime > timeBeforeStartPoint ) {
-
-              if (!hb[thisTrackNum + 1].playing()) {
-
-                hb[thisTrackNum + 1].volume(0);
-                hb[thisTrackNum + 1].play();
-              }
-
-              crossFade(progressAfterStartPointInDec, thisTrackNum)
-              crossFade(1 - progressAfterStartPointInDec, thisTrackNum + 1);
-
-
+        const trackPromise = (r) => {
+          r = data;
+          return new Promise ((resolve) => {
+            if (r > 4) {
+              return resolve(trackStart());
             }
-          }
+          });
+      
+        }
+        }
+        console.log(r);
+        console.log(trackPromise());
 
+        function trackStart() {
+          setTimeout(()=> {
+            updateTrackCrossfade();
+            hb[thisTrackNum].play();
+            // setInterval will perform action every 50ms
+              setInterval(() => {
+                 if (isInBounds(thisTrackNum, hb)) {
+            	    currentTime = hb[thisTrackNum].seek();
+            	    progressAfterStartPointInDec = (currentTime - timeBeforeStartPoint) / timeAfterStartPoint
 
-          }, 50);
+            	    if ( currentTime > timeBeforeStartPoint ) {
 
-        }, 1000)
-      }
+            	      if (!hb[thisTrackNum + 1].playing()) {
 
-      else {
+            	        hb[thisTrackNum + 1].volume(0);
+            	        hb[thisTrackNum + 1].play();
+            	      }
 
-      }
+            	      crossFade(progressAfterStartPointInDec, thisTrackNum)
+            	      crossFade(1 - progressAfterStartPointInDec, thisTrackNum + 1);
+            	    }
+            	  }
+
+            	}, 50);
+          }, 100);
+        }
+        // function trackStarted() {
+        //   hb[thisTrackNum].stop();
+        // }
     });
 
 
