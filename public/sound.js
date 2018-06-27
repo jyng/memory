@@ -11,6 +11,7 @@ window.onload = function(e) {
         "/sound/party.wav",
         "/sound/school.mp3",
         "/sound/bus-begin.wav"],
+        //debug ["/sound/sin.wav"],
         //2//
         ["/sound/bus-on.wav",
         "/sound/plow.mp3",
@@ -18,6 +19,7 @@ window.onload = function(e) {
         "/sound/55.mp3",
         "/sound/office.mp3",
         "/sound/park.wav"],
+        //debug ["/sound/tri.wav"],
         //3//
         ["/sound/21.mp3",
         "/sound/3bus.mp3",
@@ -25,6 +27,7 @@ window.onload = function(e) {
         "/sound/3bus2.mp3",
         "/sound/3bus3.mp3",
         "/sound/plow.mp3"],
+        //debug ["/sound/saw.wav"],
         //4//
         ["/sound/4d.mp3",
         "/sound/4dd.ogg",
@@ -32,6 +35,7 @@ window.onload = function(e) {
         "/sound/faye.mp3",
         "/sound/4dd.ogg",
         "/sound/waves.mp3"],
+        //debug ["/sound/sqr.wav"],
       ]
       currentTime = false
       crossFadeStartPoints = []
@@ -79,98 +83,41 @@ window.onload = function(e) {
         buffer: true,
         })
     });
-    // Check if function is running
-
-
-    // Wait for tracks to load
+    // Check if track has started
+    var trackStarted = false;
+    // var range = 4 < r < 100;
     var socket = io.connect(window.location.origin);
-
     socket.on('data',function(data) {
-        const trackPromise = (r) => {
-          r = data;
-          return new Promise ((resolve) => {
-            if (r > 4) {
-              return resolve(trackStart());
+      r = data;
+      console.log(r);
+      if (!trackStarted && r > 9 && r < 15) {
+      console.log( "I started")
+
+      // log that track has started
+      trackStarted = true;
+      setTimeout(() => {
+        updateTrackCrossfade();
+        hb[thisTrackNum].play();
+        setInterval(() => {
+          if (isInBounds(thisTrackNum, hb)) {
+            currentTime = hb[thisTrackNum].seek();
+            progressAfterStartPointInDec = (currentTime - timeBeforeStartPoint) / timeAfterStartPoint
+            console.log('vol B:', hb[thisTrackNum+1].volume(), 'vol A:', hb[thisTrackNum].volume())
+            if ( currentTime > timeBeforeStartPoint ) {
+              if (!hb[thisTrackNum + 1].playing()) {
+                hb[thisTrackNum + 1].volume(0);
+                hb[thisTrackNum + 1].play();
+              }
+              crossFade(progressAfterStartPointInDec, thisTrackNum)
+              crossFade(1 - progressAfterStartPointInDec, thisTrackNum + 1);
             }
-          });
-      
-        }
-        }
-        console.log(r);
-        console.log(trackPromise());
+          }
+        }, 50); //set interval end
+      }, 1000)
+    }
 
-        function trackStart() {
-          setTimeout(()=> {
-            updateTrackCrossfade();
-            hb[thisTrackNum].play();
-            // setInterval will perform action every 50ms
-              setInterval(() => {
-                 if (isInBounds(thisTrackNum, hb)) {
-            	    currentTime = hb[thisTrackNum].seek();
-            	    progressAfterStartPointInDec = (currentTime - timeBeforeStartPoint) / timeAfterStartPoint
-
-            	    if ( currentTime > timeBeforeStartPoint ) {
-
-            	      if (!hb[thisTrackNum + 1].playing()) {
-
-            	        hb[thisTrackNum + 1].volume(0);
-            	        hb[thisTrackNum + 1].play();
-            	      }
-
-            	      crossFade(progressAfterStartPointInDec, thisTrackNum)
-            	      crossFade(1 - progressAfterStartPointInDec, thisTrackNum + 1);
-            	    }
-            	  }
-
-            	}, 50);
-          }, 100);
-        }
-        // function trackStarted() {
-        //   hb[thisTrackNum].stop();
-        // }
     });
 
-
-    // const sensor = () => {
-    //
-    //
-    // }
-  //   if (r > 2){
-  //   setTimeout(() => {
-  //     updateTrackCrossfade()
-  //     // currentTime = hb[thisTrackNum].seek();
-  //     hb[thisTrackNum].play();
-  //
-  //     setInterval(() => {
-  //       // console.log(hb.map(item => item.playing()))
-  //
-  //       //
-  //     if (isInBounds(thisTrackNum, hb)) {
-  //       currentTime = hb[thisTrackNum].seek();
-  //       progressAfterStartPointInDec = (currentTime - timeBeforeStartPoint) / timeAfterStartPoint
-  //
-  //       console.log('vol B:', hb[thisTrackNum+1].volume(), 'vol A:', hb[thisTrackNum].volume())
-  //
-  //       if ( currentTime > timeBeforeStartPoint ) {
-  //
-  //         if (!hb[thisTrackNum + 1].playing()) {
-  //
-  //           hb[thisTrackNum + 1].volume(0);
-  //           hb[thisTrackNum + 1].play();
-  //         }
-  //
-  //         crossFade(progressAfterStartPointInDec, thisTrackNum)
-  //         crossFade(1 - progressAfterStartPointInDec, thisTrackNum + 1);
-  //
-  //
-  //       }
-  //     }
-  //
-  //
-  //     }, 50);
-  //
-  //   }, 1000)
-  // }
   //
   // else {
   //
@@ -204,8 +151,14 @@ window.onload = function(e) {
       if (isInBounds(thisTrackNum, hb)) {
         thisTrackNum = thisTrackNum + 1
         updateTrackCrossfade()
+        console.log(thisTrackNum);
+
       } else {
-        console.log("i'm done")
+        console.log("i'm done");
+        setTimeout(() => {
+          window.location.reload(false);
+        },300);
+        // console.log(trackStarted);
       }
       //
       // hb[thisTrackNum].volume(0);
