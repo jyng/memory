@@ -4,38 +4,42 @@ window.onload = function(e) {
       thisTrackNum = 0;
       playlistUrls = [
         //1//
-        ["/sound/2p.mp3",
-        "/sound/lobby.wav",
-        "/sound/airport.mp3",
-        "/sound/3m.mp3",
-        "/sound/party.wav",
-        "/sound/school.mp3",
-        "/sound/bus-begin.wav"],
-        //debug ["/sound/sin.wav"],
+        // ["/sound/2p.mp3",
+        // "/sound/lobby.wav",
+        // "/sound/airport.mp3",
+        // "/sound/3m.mp3",
+        // "/sound/party.wav",
+        // "/sound/school.mp3",
+        // "/sound/bus-begin.wav"],
+        //debug
+         ["/sound/sin.wav"],
         //2//
-        ["/sound/bus-on.wav",
-        "/sound/plow.mp3",
-        "/sound/21.mp3",
-        "/sound/55.mp3",
-        "/sound/office.mp3",
-        "/sound/park.wav"],
-        //debug ["/sound/tri.wav"],
+        // ["/sound/bus-on.wav",
+        // "/sound/plow.mp3",
+        // "/sound/21.mp3",
+        // "/sound/55.mp3",
+        // "/sound/office.mp3",
+        // "/sound/park.wav"],
+        // debug
+        ["/sound/tri.wav"],
         //3//
-        ["/sound/21.mp3",
-        "/sound/3bus.mp3",
-        "/sound/3m.mp3",
-        "/sound/3bus2.mp3",
-        "/sound/3bus3.mp3",
-        "/sound/plow.mp3"],
-        //debug ["/sound/saw.wav"],
+        // ["/sound/21.mp3",
+        // "/sound/3bus.mp3",
+        // "/sound/3m.mp3",
+        // "/sound/3bus2.mp3",
+        // "/sound/3bus3.mp3",
+        // "/sound/plow.mp3"],
+        // debug
+        ["/sound/saw.wav"],
         //4//
-        ["/sound/4d.mp3",
-        "/sound/4dd.ogg",
-        "/sound/song.mp3",
-        "/sound/faye.mp3",
-        "/sound/4dd.ogg",
-        "/sound/waves.mp3"],
-        //debug ["/sound/sqr.wav"],
+        // ["/sound/4d.mp3",
+        // "/sound/4dd.ogg",
+        // "/sound/song.mp3",
+        // "/sound/faye.mp3",
+        // "/sound/4dd.ogg",
+        // "/sound/waves.mp3"],
+        // debug
+        ["/sound/sqr.wav"],
       ]
       currentTime = false
       crossFadeStartPoints = []
@@ -155,9 +159,10 @@ window.onload = function(e) {
 
       } else {
         console.log("i'm done");
-        setTimeout(() => {
-          window.location.reload(false);
-        },300);
+        setTimeout(function () {
+          location.reload();
+        }, 40 * 1000);
+          // window.location.reload(false)
         // console.log(trackStarted);
       }
       //
