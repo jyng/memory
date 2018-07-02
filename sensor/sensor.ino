@@ -16,8 +16,8 @@
 // Hook up HC-SR04 with Trig to Arduino Pin 10, Echo to Arduino pin 13
 // Maximum Distance is 400 cm
 
-#define TRIGGER_PIN  11
-#define ECHO_PIN     12
+#define TRIGGER_PIN  9
+#define ECHO_PIN     8
 #define MAX_DISTANCE 400
  
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);

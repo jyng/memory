@@ -4,46 +4,51 @@ window.onload = function(e) {
       thisTrackNum = 0;
       playlistUrls = [
         //1//
-        // ["/sound/2p.mp3",
-        // "/sound/lobby.wav",
-        // "/sound/airport.mp3",
-        // "/sound/3m.mp3",
-        // "/sound/party.wav",
-        // "/sound/school.mp3",
-        // "/sound/bus-begin.wav"],
+        ["/sound/begin1.mp3",
+        "/sound/begin2.mp3",
+        "/sound/begin3.mp3",
+        "/sound/begin4.mp3",
+        "/sound/begin5.mp3",
+        "/sound/begin6.mp3",
+        "/sound/begin7.mp3",
+        "/sound/begin8.mp3"],
         //debug
-         ["/sound/sin.wav"],
+         // ["/sound/sin.wav"],
         //2//
-        // ["/sound/bus-on.wav",
-        // "/sound/plow.mp3",
-        // "/sound/21.mp3",
-        // "/sound/55.mp3",
-        // "/sound/office.mp3",
-        // "/sound/park.wav"],
+        ["/sound/bus.mp3",
+        "/sound/bus4.mp3",
+        "/sound/bus-on2.ogg",
+        "/sound/bus-on3.ogg",
+        "/sound/child.mp3",
+        "/sound/corona-heights.mp3",
+        "/sound/in-lyft.mp3"],
         // debug
-        ["/sound/tri.wav"],
+        // ["/sound/tri.wav"],
         //3//
-        // ["/sound/21.mp3",
-        // "/sound/3bus.mp3",
-        // "/sound/3m.mp3",
-        // "/sound/3bus2.mp3",
-        // "/sound/3bus3.mp3",
-        // "/sound/plow.mp3"],
+        ["/sound/bart.mp3",
+        "/sound/becky.mp3",
+        "/sound/bus-convo.mp3",
+        "/sound/bus-wknd.mp3",
+        "/sound/bussing.mp3",
+        "/sound/bussing2.mp3",
+        "/sound/forest.mp3",
+        "/sound/hallway.mp3",
+        "/sound/lyft.mp3"],
         // debug
-        ["/sound/saw.wav"],
+        // ["/sound/saw.wav"],
         //4//
-        // ["/sound/4d.mp3",
-        // "/sound/4dd.ogg",
-        // "/sound/song.mp3",
-        // "/sound/faye.mp3",
-        // "/sound/4dd.ogg",
-        // "/sound/waves.mp3"],
+        ["/sound/aw.mp3",
+        "/sound/meeting.ogg",
+        "/sound/noonallday.mp3",
+        "/sound/sad.mp3",
+        "/sound/somewhere.ogg",
+        "/sound/waves.mp3"],
         // debug
-        ["/sound/sqr.wav"],
+        // ["/sound/sqr.wav"],
       ]
       currentTime = false
       crossFadeStartPoints = []
-      startPointPercentage = 0.7
+      startPointPercentage = 0.75
       currentTrackDuration = 0
       timeAfterStartPoint = 0
       timeBeforeStartPoint = 0
@@ -161,7 +166,9 @@ window.onload = function(e) {
         console.log("i'm done");
         setTimeout(function () {
           location.reload();
-        }, 40 * 1000);
+        }, 15000
+
+      );
           // window.location.reload(false)
         // console.log(trackStarted);
       }
